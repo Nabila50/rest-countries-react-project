@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './country.css'
 
-const Country = ({country}) => {
+const Country = ({country, handleVisitedCountries}) => {
 
     const [visited, setVisited]= useState(false);
 
@@ -17,15 +17,16 @@ const Country = ({country}) => {
 
         // ----another way to do toggle----
         setVisited(!visited);
+        handleVisitedCountries(country);
     }
      
     return (
-        <div className={`country ${visited && 'country-visited'}`}>
+        <div className={`country fav-country ${visited && 'country-visited'}`}>
             <h3>Name: {country.name.common} </h3>
             <img src={country.flags.png} alt="" />
             <p>Independent: {country.independent ? 'Free': 'Not Free'}</p>
             <p>Population: {country.population}</p>
-            <button onClick={handleVisited}>{visited ? 'Visited': 'Not Visited'}</button>
+            <button className={visited ? 'btn-visited': 'btn-not-visited'} onClick={handleVisited}>{visited ? 'Visited': 'Not Visited'}</button>
         </div>
     );
 };
