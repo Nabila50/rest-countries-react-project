@@ -20,10 +20,17 @@ import Country from '../Country/Country';
 import './Countries.css';
 
 const Countries = ({countriesPromise}) => {
-    const [visitedCountries, setVisitedCountries] = useState([])
+    const [visitedCountries, setVisitedCountries] = useState([]);
+    const [visitedFlags, setVisitedFlags] = useState([]);
 
 
     const countries = use(countriesPromise);
+
+    const handleVisitedFlags = (flag) =>{
+       const newVisitedFlags = [...visitedFlags, flag];
+       setVisitedFlags(newVisitedFlags);
+        
+    }
 
     const handleVisitedCountries = (country)=> {
         console.log('country visited clicked to be added', country);
@@ -35,9 +42,15 @@ const Countries = ({countriesPromise}) => {
         <div>
             <h1>Teaveling Countries: {countries.length}</h1>
             <h3>Traveled so far: {visitedCountries.length} </h3>
+            <div className='visited-flags-container'>
+                {
+                    visitedFlags.map((flag, index) => <img key={index} src={flag}></img>)
+                }
+
+            </div>
             <ol>
                 {
-                    visitedCountries.map(country => <li>{country.name.common}</li>)
+                    visitedCountries.map(country => <li key ={country.cca3}>{country.name.common}</li>)
                 }
             </ol>
             <div className='countries'>
@@ -45,7 +58,8 @@ const Countries = ({countriesPromise}) => {
                 countries.map(country => <Country 
                     key={country.cca3} 
                     country = {country}
-                    handleVisitedCountries ={handleVisitedCountries} ></Country>)
+                    handleVisitedCountries ={handleVisitedCountries} 
+                    handleVisitedFlags ={handleVisitedFlags}></Country>)
             }
             </div>
         </div>
